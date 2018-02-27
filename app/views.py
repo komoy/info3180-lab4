@@ -9,6 +9,8 @@ from app import app
 from flask import render_template, request, redirect, url_for, flash, session, abort
 from werkzeug.utils import secure_filename
 from forms import UploadForm
+ALLOWED_EXTENSIONS = [ 'png', 'jpg', 'jpeg', 'gif']
+
 
 
 ###
@@ -73,7 +75,20 @@ def logout():
     session.pop('logged_in', None)
     flash('You were logged out', 'success')
     return redirect(url_for('home'))
+@app.route('/files')
+def files():
+    if session.get('logged in'):
+        filelist = get_images()
+        print filelist
+        return render_template('files.html')
+def get_images():
+    uploads = []
+    for cwd, subdirs, files in os.walk(app.config['UPLOAD_FOLDER']):
+        for file in files:
+            if file.split('.')[-1] in ALLOWED_EXTENSIONS:
+                uploads.append(file)
 
+    return uploads
 
 ###
 # The functions below should be applicable to all Flask apps.

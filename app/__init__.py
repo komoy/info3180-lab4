@@ -4,6 +4,7 @@ from flask import Flask
 USERNAME = 'admin'
 PASSWORD = 'password123'
 UPLOAD_FOLDER = './app/static/uploads'
+ALLOWED_EXTENSIONS = [ 'png', 'jpg', 'jpeg', 'gif']
 
 # SECRET_KEY is needed for session security, the flash() method in this case stores the message in a session
 SECRET_KEY = 'Sup3r$3cretkey'
